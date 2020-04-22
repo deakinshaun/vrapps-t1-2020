@@ -9,9 +9,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
 
-    public GameObject avatarPrefab;
+    public GameObject avatarPrefab1;
+    public GameObject avatarPrefab2;
 
-    void Start()
+    public string RoleName;
+
+    public void AssignRoleNurse()
+    {
+        RoleName = "Nurse";
+        Debug.Log("Role Selected: Nurse");
+    }
+
+    public void AssignRoleSurgeon()
+    {
+        RoleName = "Surgeon";
+        Debug.Log("Role Selected: Surgeon");
+    }
+
+    public void initialize()
     {
         Debug.Log("Initializing connection");
         PhotonNetwork.ConnectUsingSettings();
@@ -27,6 +42,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("You are in a room with " + PhotonNetwork.CurrentRoom.PlayerCount + " other participants. Ugheyeuh.");
-        PhotonNetwork.Instantiate(avatarPrefab.name, new Vector3(), Quaternion.identity, 0);
+        if (RoleName.Equals("Nurse"))
+        {
+            PhotonNetwork.Instantiate(avatarPrefab1.name, new Vector3(), Quaternion.identity, 0);
+        }
+        if (RoleName.Equals("Surgeon"))
+        {
+            PhotonNetwork.Instantiate(avatarPrefab2.name, new Vector3(), Quaternion.identity, 0);
+        }
     }
 }
