@@ -35,7 +35,7 @@ namespace Lean
 			
 			gameObject.AddComponent<LeanTouch>();
 			
-			Selection.activeGameObject = gameObject;
+		//	Selection.activeGameObject = gameObject;
 		}
 		
 		// Draw the whole inspector
