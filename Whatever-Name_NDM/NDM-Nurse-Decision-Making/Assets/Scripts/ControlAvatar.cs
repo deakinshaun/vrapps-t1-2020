@@ -17,17 +17,17 @@ public class ControlAvatar : MonoBehaviour
     {
         if (GetComponent<PhotonView>().IsMine == true || PhotonNetwork.IsConnected == false)
         { 
-            GameObject.Find("Canvas/LeftButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { turnLeft(); });
-            GameObject.Find("Canvas/LeftButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
+            GameObject.Find("Movement_UI/LeftButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { turnLeft(); });
+            GameObject.Find("Movement_UI/LeftButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
 
-            GameObject.Find("Canvas/RightButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { turnRight(); });
-            GameObject.Find("Canvas/RightButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
+            GameObject.Find("Movement_UI/RightButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { turnRight(); });
+            GameObject.Find("Movement_UI/RightButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
 
-            GameObject.Find("Canvas/ForwardButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { moveForward(); });
-            GameObject.Find("Canvas/ForwardButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
+            GameObject.Find("Movement_UI/ForwardButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { moveForward(); });
+            GameObject.Find("Movement_UI/ForwardButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
 
-            GameObject.Find("Canvas/BackwardButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { moveBackward(); });
-            GameObject.Find("Canvas/BackwardButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
+            GameObject.Find("Movement_UI/BackwardButton").GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { moveBackward(); });
+            GameObject.Find("Movement_UI/BackwardButton").GetComponent<EventTrigger>().triggers[1].callback.AddListener((data) => { stopEverything(); });
         }
         
     }
