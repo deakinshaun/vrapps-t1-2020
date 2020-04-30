@@ -1,23 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Vuforia;
 using UnityEngine;
 
-public class ObjectSpawner : MonoBehaviour
+public class ObjectSpawner : MonoBehaviour, ITrackableEventHandler
 {
     public Vector2 GameArea;
     public GameObject objectPrefab;
-   // private TrackableBehaviour mTrackableBehaviour;
+    private TrackableBehaviour mTrackableBehaviour;
     private GameObject CurrentAnimal;
     public GameObject floor;
     // Start is called before the first frame update
     void Start()
     {
-      /*  mTrackableBehaviour = GetComponent<TrackableBehaviour>();
+        mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
         {
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
         }
-        */
     }
 
     private void SpawnObjects ()
@@ -30,8 +30,8 @@ public class ObjectSpawner : MonoBehaviour
             CurrentAnimal = spawnedObject;
        // }
     }
-    /*    public void OnTrackableStateChanged(
-                                TrackableBehaviour.Status previousStatus,
+    public void OnTrackableStateChanged(
+                                    TrackableBehaviour.Status previousStatus,
                                     TrackableBehaviour.Status newStatus)
     {
         if (newStatus == TrackableBehaviour.Status.DETECTED ||
@@ -42,11 +42,11 @@ public class ObjectSpawner : MonoBehaviour
         else
         {
             Destroy(CurrentAnimal);
-        }*/
+        }
+    }
 
-
-// Update is called once per frame
-void Update()   
+    // Update is called once per frame
+    void Update()   
     {
         CurrentAnimal.transform.position = new Vector3((floor.transform.position.x + Random.Range(0.3f,0.3f)), (floor.transform.position.y - 0.5f), (floor.transform.position.z + Random.Range(0.3f, 0.3f)));
     }
