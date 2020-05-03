@@ -11,6 +11,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public GameObject avatarPrefab1;
     public GameObject avatarPrefab2;
+    public Camera SceneCamera;
 
     public string RoleName;
 
@@ -30,6 +31,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Initializing connection");
         PhotonNetwork.ConnectUsingSettings();
+
+        //set the bit enabling the mask which shows the starter ui layer to 0
+        SceneCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Starting_UI"));
+        
     }
 
     public override void OnConnectedToMaster()
@@ -44,11 +49,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("You are in a room with " + PhotonNetwork.CurrentRoom.PlayerCount + " other participants. Ugheyeuh.");
         if (RoleName.Equals("Nurse"))
         {
+            //Make more descriptive avatar prefab names please
             PhotonNetwork.Instantiate(avatarPrefab1.name, new Vector3(), Quaternion.identity, 0);
+
+            //set the bit enabling the mask which shows the movement ui layer to 1
+            SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Movement_UI");
+
         }
         if (RoleName.Equals("Surgeon"))
         {
             PhotonNetwork.Instantiate(avatarPrefab2.name, new Vector3(), Quaternion.identity, 0);
+
+           
+            SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Movement_UI");
         }
     }
 }
