@@ -964,7 +964,7 @@ MonoBehaviour:
   unityMicrophoneDevice: Microphone (Realtek(R) Audio)
   photonMicrophoneDeviceId: 0
   interestGroup: 0
-  debugEchoMode: 1
+  debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
   transmitEnabled: 1
@@ -2133,7 +2133,6 @@ MonoBehaviour:
   logLevel: 1
   enableSupportLogger: 0
   updateInterval: 50
-  runInBackground: 1
   statsResetInterval: 1000
   speakerPrefab: {fileID: 1876069719582329290, guid: 20fa84e5e60e39c4e9d855779c863393,
     type: 3}
