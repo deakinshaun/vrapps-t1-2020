@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class PoseData
-{
-    public float[] poseFrame;
-    public float deltaTime = 0;
+{       
     public long timeStamp = 0;
+    public float deltaTime = 0;
+    public float[] poseFrame;
 
     public PoseData(float[] pose,long t)
     {
-        deltaTime = Time.deltaTime;
         timeStamp = t;
+        deltaTime = Time.deltaTime;       
+        poseFrame = pose;
     }
 }

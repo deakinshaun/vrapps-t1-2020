@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
     private IEnumerator sceneSwitcher;
 
+    public static GameManager instance;
 
     private void Awake()
     {
@@ -32,10 +31,9 @@ public class GameManager : MonoBehaviour
         sceneSwitcher = sceneSwitch();       
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartChildCoroutine(IEnumerator coroutineMethod)
     {
-        
+        StartCoroutine(coroutineMethod);
     }
     public void OnStartClicked()
     {       

@@ -16,76 +16,52 @@ using System.Diagnostics;
 
 public class FetchPose : MonoBehaviour
 {
-    private float poseMultiplier = 1;
-    
-    private WebCamTexture webcamTexture;
-
-    private int numPointsInPose = 17;
-
+    private float poseMultiplier = 1;   
+    public Texture background;
+    private int numPointsInPose = 17;   
     public PoseSkeleton poseSkeleton;
     
 
     private bool dataReady;
 
-    public Text outputText;
 
     private bool isRecording = false;
     private Stopwatch watch;
-    private PoseClip currentClip;
+    //private PoseClip currentClip;
     public void toggleCapture()
-    {
-        isRecording = !isRecording;
-        if(isRecording)
+    { 
+        if(watch != null)
         {
-            watch.Start();
-            currentClip = new PoseClip();
+            isRecording = !isRecording;
+            if (isRecording&& CameraManager.instance.initCamera())
+            {  
+                watch.Start();
+                poseSkeleton.clip = new PoseClip();
+            }
+            else
+            {
+                isRecording = false;
+                watch.Stop();
+                poseSkeleton.clip.Stopped(watch.ElapsedMilliseconds);
+                watch.Reset();
+                //TODO - prompt user to keep or discard
+            }
         }
-        else
-        {
-            watch.Stop();
-            currentClip.Stopped(watch.ElapsedMilliseconds);
-            watch.Reset();
-            //TODO - prompt user to keep or discard
-            
-        }
+       
     }
-
+   
     // Start is called before the first frame update
     void Start()
     {
-        WebCamDevice[] devices = WebCamTexture.devices;
-        if(devices.Length == 0)
-        {
-            outputText.text = "No Cameras Detected";
-            return;
-        }
-        for(int i=0;i<devices.Length;i++)
-        {
-            if(!devices[i].isFrontFacing)
-            {
-                webcamTexture = new WebCamTexture(devices[i].name);
-            }
-        }
-        if(webcamTexture==null)
-        {
-            outputText.text = "No back camera detected";
-            return;
-        }
-        else
-        {
-            outputText.text = "Camera found: " + webcamTexture.deviceName;
-
-            GetComponent<RawImage>().texture = webcamTexture;
-            webcamTexture.Play();
-            watch = new Stopwatch();
-            StartCoroutine(prepareModel());
-        }
+        CameraManager.instance.initCamera();       
+        watch = new Stopwatch();
+        StartCoroutine(prepareModel());
     }
 
     private void Ready(bool ready)
     {
         dataReady = ready;
-        outputText.text += "\n Dataready:"+dataReady;
+        UIManager.instance.outputText.text  += "\n Dataready:"+dataReady;
     }
     IEnumerator prepareModel()
     {
@@ -104,7 +80,7 @@ public class FetchPose : MonoBehaviour
     unsafe float[] retrievePose()
     {
         NativeArray<float> pose = new NativeArray<float>(numPointsInPose * 3, Allocator.Temp);
-        int result = LoadPlugins.computePose(webcamTexture.GetNativeTexturePtr(), webcamTexture.width, webcamTexture.height, (float*)NativeArrayUnsafeUtility.GetUnsafePtr(pose));
+        int result = LoadPlugins.computePose(CameraManager.instance.webcamTexture.GetNativeTexturePtr(), CameraManager.instance.webcamTexture.width, CameraManager.instance.webcamTexture.height, (float*)NativeArrayUnsafeUtility.GetUnsafePtr(pose));
         return pose.ToArray();
     }
 
@@ -113,9 +89,9 @@ public class FetchPose : MonoBehaviour
     // accessing the texture directly. 
     unsafe float[] retrievePoseData()
     { 
-        Texture2D image = new Texture2D(GetComponent<RawImage>().mainTexture.width, GetComponent<RawImage>().mainTexture.height, TextureFormat.RGB24, false);
-        RenderTexture renderTexture = new RenderTexture(GetComponent<RawImage>().mainTexture.width, GetComponent<RawImage>().mainTexture.height, 24);
-        Graphics.Blit(GetComponent<RawImage>().mainTexture, renderTexture);
+        Texture2D image = new Texture2D(UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.width, UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height, TextureFormat.RGB24, false);
+        RenderTexture renderTexture = new RenderTexture(UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.width, UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height, 24);
+        Graphics.Blit(UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture, renderTexture);
         RenderTexture.active = renderTexture;
 
         image.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
@@ -133,7 +109,7 @@ public class FetchPose : MonoBehaviour
     void Update()
     {
        
-        poseMultiplier = GetComponent<RawImage>().mainTexture.height/40f;
+       // poseMultiplier = GetComponent<RawImage>().mainTexture.height/40f;
 
         if (dataReady && isRecording )
         {
@@ -141,15 +117,15 @@ public class FetchPose : MonoBehaviour
             
             if(pose.Length > 0)
             {
-                poseSkeleton.updatePose(pose, poseMultiplier);
+                poseSkeleton.updatePose(pose);
                 //record frame
                 watch.Stop();
-                currentClip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));
+                poseSkeleton.clip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));
                 watch.Start();
             }
         }
     }
-
+   
     // Copy files into an area where they are accessible. This is particularly
     // relevant to packages created for mobile platforms.
     IEnumerator extractFile(string assetPath, string assetFile)
