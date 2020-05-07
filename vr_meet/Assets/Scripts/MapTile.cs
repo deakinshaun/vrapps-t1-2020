@@ -61,7 +61,7 @@ public class MapTile : MonoBehaviour
 
     private void updateTexture(int x, int y, int z)
     {
-        string url = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=46.414382,10.013988&heading=151.78&pitch=-0.76&key=AIzaSyABdg-YgFm4sCbjdjj8kR4aSksXROYDERE&signature=lBsZZ0YvK0mwhmeLmRrnFACAuzU=";
+        string url = "https://maps.googleapis.com/maps/api/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=";
         Debug.Log("Retrieving: " + url);
         WebRequest www = WebRequest.Create(url);
         ((HttpWebRequest)www).UserAgent = "Map"; 
