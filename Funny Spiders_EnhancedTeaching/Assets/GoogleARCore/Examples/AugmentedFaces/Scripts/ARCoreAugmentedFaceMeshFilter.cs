@@ -22,6 +22,7 @@ namespace GoogleARCore.Examples.AugmentedFaces
 {
     using System.Collections.Generic;
     using GoogleARCore;
+    using UnityEngine.UI;
     using UnityEngine;
 
     /// <summary>
@@ -35,7 +36,12 @@ namespace GoogleARCore.Examples.AugmentedFaces
         /// </summary>
         public bool AutoBind = false;
 
+        public Text debugText;
+        public Text debugText2;
+        public Text debugText3;
+
         private AugmentedFace m_AugmentedFace = null;
+
         private List<AugmentedFace> m_AugmentedFaceList = null;
 
         // Keep previous frame's mesh polygon to avoid mesh update every frame.
@@ -45,6 +51,7 @@ namespace GoogleARCore.Examples.AugmentedFaces
         private List<int> m_MeshIndices = new List<int>();
         private Mesh m_Mesh = null;
         private bool m_MeshInitialized = false;
+        private Vector3 pos;
 
         /// <summary>
         /// Gets or sets the ARCore AugmentedFace object that will be used to update the face mesh data.
@@ -106,7 +113,37 @@ namespace GoogleARCore.Examples.AugmentedFaces
         private void _UpdateMesh()
         {
             m_AugmentedFace.GetVertices(m_MeshVertices);
+            float threshold = 1.15f;
+
             m_AugmentedFace.GetNormals(m_MeshNormals);
+            float p = (m_MeshNormals[42].x + m_MeshNormals[191].x + m_MeshNormals[183].x) / 3;
+            float py = (m_MeshNormals[42].y + m_MeshNormals[191].y + m_MeshNormals[183].y) / 3;
+            float ay = (m_MeshNormals[271].y + m_MeshNormals[415].y + m_MeshNormals[407].y) / 3;
+
+            float avgY = (((ay - m_MeshNormals[16].y) + (py - m_MeshNormals[16].y)) / 2) * -1;
+            if (avgY > threshold)
+            {
+                debugText.text = ("smiling" + avgY + threshold);
+            }
+            else
+            {
+                debugText.text = ("Not smiling" + avgY + threshold);
+            }
+
+            //debugText.text = ("Vertex Position is: " + m_MeshNormals[11].x); //left side of mouth
+            //   debugText2.text = ("Vertex Position is: " + m_MeshNormals[271].x + m_MeshNormals[415].x + m_MeshNormals[407].x); // right side of mouth
+
+            //      debugText.text = ("Vertex Position is: " + m_MeshNormals[42].y + m_MeshNormals[191].y + m_MeshNormals[183].y);
+            //     debugText2.text = ("Vertex Position is: " + m_MeshNormals[271].y + m_MeshNormals[415].y + m_MeshNormals[407].y);
+
+            //    debugText.text = ("Vertex Position is: " + m_MeshNormals[42].z + m_MeshNormals[191].z + m_MeshNormals[183].z);
+            //   debugText2.text = ("Vertex Position is: " + m_MeshNormals[271].z + m_MeshNormals[415].z + m_MeshNormals[407].z);
+            //  debugText3.text = ("Vertex Position is: " + (py - m_MeshNormals[16].y));
+
+
+            debugText2.text = ("Vertex Position is: " + ((((ay - m_MeshNormals[16].y) + (py - m_MeshNormals[16].y)) / 2) * -1));
+
+
 
             if (!m_MeshInitialized)
             {
@@ -122,8 +159,12 @@ namespace GoogleARCore.Examples.AugmentedFaces
             m_Mesh.SetNormals(m_MeshNormals);
             m_Mesh.SetTriangles(m_MeshIndices, 0);
             m_Mesh.SetUVs(0, m_MeshUVs);
+            // pos = (m_MeshVertices.);
 
             m_Mesh.RecalculateBounds();
+
+
+
         }
     }
 }
