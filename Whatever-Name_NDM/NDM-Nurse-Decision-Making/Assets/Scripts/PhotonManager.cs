@@ -54,6 +54,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
             //set the bit enabling the mask which shows the movement ui layer to 1
             SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Movement_UI");
+            SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Nurse_UI");
 
         }
         if (RoleName.Equals("Surgeon"))
