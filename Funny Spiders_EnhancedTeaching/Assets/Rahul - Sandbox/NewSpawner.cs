@@ -11,6 +11,8 @@ public class NewSpawner : MonoBehaviour
     public GameObject Corner3Object;
     public GameObject Corner4Object;
     public GameObject Animal;
+
+    public Vector3 scale;
     private Vector3 randomCoordinate;
     Vector3 corner1;
     Vector3 corner2;
@@ -50,15 +52,20 @@ public class NewSpawner : MonoBehaviour
         //{
         GameObject spawnedObject;
         spawnedObject= Instantiate(Corner1Object) as GameObject;
-
+        spawnedObject.transform.localScale = scale;
         spawnedObject.transform.position = corner1;
+        
         spawnedObject = Instantiate(Corner2Object) as GameObject;
+        spawnedObject.transform.localScale = scale;
         spawnedObject.transform.position = corner2;
         spawnedObject = Instantiate(Corner3Object) as GameObject;
+        spawnedObject.transform.localScale = scale;
         spawnedObject.transform.position = corner3;
         spawnedObject = Instantiate(Corner4Object) as GameObject;
+        spawnedObject.transform.localScale = scale;
         spawnedObject.transform.position = corner4;
         spawnedObject = Instantiate(Animal) as GameObject;
+        spawnedObject.transform.localScale = scale;
         spawnedObject.transform.position = randomCoordinate;
         // CurrentAnimal = spawnedObject;
         // }
