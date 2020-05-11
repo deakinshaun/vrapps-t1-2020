@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI_Sprite
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: a04a1841ca24a6549abceeb787be17a6, type: 3}
+    totalSpriteSurfaceArea: 123395
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: fdbbe12077e23b748a420a74631fab9e, type: 3}
+  - {fileID: 21300000, guid: 803a2a503fb600c40be3876268f120c8, type: 3}
+  - {fileID: 21300000, guid: 75d51e5069529f140a28573a7bb723b3, type: 3}
+  - {fileID: 21300000, guid: 3eb7b2a01d26a7a4bb31cccb3b47d66b, type: 3}
+  - {fileID: 21300000, guid: 0442b8b0cf8a5814897286408c29d98e, type: 3}
+  - {fileID: 21300000, guid: 6b181dc0aabd5ce43a022695333d5b57, type: 3}
+  - {fileID: 21300000, guid: 4b7be5513039b614eb69ca006b422c90, type: 3}
+  - {fileID: 21300000, guid: 68bc7f81c1d8f684180929242e7cac4b, type: 3}
+  - {fileID: 21300000, guid: 933ba0f1a98ac9446a7e29c73e579d31, type: 3}
+  - {fileID: 21300000, guid: 1beb29f189224874296810a09bc1266d, type: 3}
+  - {fileID: 21300000, guid: ab384852aa1a7d24f8c266e03019cf81, type: 3}
+  - {fileID: 21300000, guid: 630ef1a29903a1549908aad8413ede1c, type: 3}
+  - {fileID: 21300000, guid: ed9d563390b3a2b4fb44bf17523b6d95, type: 3}
+  - {fileID: 21300000, guid: 9789c84301d6e384f8f1d642190d1d13, type: 3}
+  - {fileID: 21300000, guid: 2cff2cd4ffffa474caf4b135f1983d18, type: 3}
+  - {fileID: 21300000, guid: 66bebdd4a6ccae7469bf0002ff4fbb40, type: 3}
+  - {fileID: 21300000, guid: e065a91653f57b14a9fda7d58f01e23f, type: 3}
+  - {fileID: 21300000, guid: 95c0c546caf125644b62bc397dbd1ca0, type: 3}
+  - {fileID: 21300000, guid: f0ceec660987677428520442cf994caf, type: 3}
+  - {fileID: 21300000, guid: 7e9c6da676901e241837d4ccdb76ad49, type: 3}
+  - {fileID: 21300000, guid: 283aa4f657f82d2449d3a6dc438d4fae, type: 3}
+  - {fileID: 21300000, guid: 406725972bb1d9944bd0817d84c860fb, type: 3}
+  - {fileID: 21300000, guid: a6733de71d880464b804931a404e758a, type: 3}
+  - {fileID: 21300000, guid: a42b4538e2ce7f84c98623765a94a0ba, type: 3}
+  - {fileID: 21300000, guid: 178d2978da48ab64e803aacc8380536b, type: 3}
+  - {fileID: 21300000, guid: 15ba12b87d1ea804a9ac62e4de902276, type: 3}
+  - {fileID: 21300000, guid: ba867ab8af47f9d4b926025983b09b6e, type: 3}
+  - {fileID: 21300000, guid: 01381729e265549468053d5a28dc0188, type: 3}
+  - {fileID: 21300000, guid: 394dcac9a27b3214690eb07e3d6cfea6, type: 3}
+  - {fileID: 21300000, guid: 7f55923a2e78a134fb0d804db18af7f7, type: 3}
+  - {fileID: 21300000, guid: 814fac9a5fc57214bb9e79a38eee81cf, type: 3}
+  - {fileID: 21300000, guid: 16d04adafedd70348b97ba3c60d444f5, type: 3}
+  - {fileID: 21300000, guid: d0c9117b8e842d54583c432016644b37, type: 3}
+  - {fileID: 21300000, guid: ebe9129bd9cc8b5479b7ee75ecdf329a, type: 3}
+  - {fileID: 21300000, guid: 5c2df6cb786f8c348975013a32c643b6, type: 3}
+  - {fileID: 21300000, guid: 7f52044cb6fe2944fa63c10e286203bd, type: 3}
+  - {fileID: 21300000, guid: 474a931d77a90634cbe9eb378e887f27, type: 3}
+  - {fileID: 21300000, guid: 47ffee9da5bcd054498cbf742d3a4111, type: 3}
+  - {fileID: 21300000, guid: 09eb3cdd4112b5544a450402021abd1f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - grey_button14
+  - grey_boxCheckmark
+  - grey_tickWhite
+  - grey_sliderUp
+  - grey_button02
+  - grey_checkmarkGrey
+  - grey_button15
+  - grey_arrowDownWhite
+  - grey_button05
+  - grey_sliderDown
+  - grey_button07
+  - grey_button12
+  - grey_sliderHorizontal
+  - grey_sliderVertical
+  - grey_boxTick
+  - grey_checkmarkWhite
+  - grey_arrowDownGrey
+  - grey_button09
+  - grey_button13
+  - grey_button00
+  - grey_panel
+  - grey_tickGrey
+  - grey_button11
+  - grey_circle
+  - grey_boxCross
+  - grey_box
+  - grey_button08
+  - grey_crossGrey
+  - grey_arrowUpWhite
+  - grey_crossWhite
+  - grey_button10
+  - grey_sliderRight
+  - grey_button04
+  - grey_button06
+  - grey_sliderEnd
+  - grey_button03
+  - grey_button01
+  - grey_arrowUpGrey
+  - grey_sliderLeft
+  m_Tag: UI_Sprite
+  m_IsVariant: 0
