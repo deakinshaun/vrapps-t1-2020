@@ -30,7 +30,7 @@ public class FetchPose : MonoBehaviour
     //private PoseClip currentClip;
     public void toggleCapture()
     { 
-        if(watch != null)
+        if(watch != null && CameraManager.instance.backCam)
         {
             isRecording = !isRecording;
             if (isRecording&& CameraManager.instance.initCamera())
@@ -38,7 +38,7 @@ public class FetchPose : MonoBehaviour
                 watch.Start();
                 poseSkeleton.clip = new PoseClip();
             }
-            else
+            else 
             {
                 isRecording = false;
                 watch.Stop();

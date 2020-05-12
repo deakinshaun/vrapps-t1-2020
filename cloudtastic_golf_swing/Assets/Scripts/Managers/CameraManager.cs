@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     public WebCamTexture webcamTexture;
 
     public static CameraManager instance;
-
+    public bool backCam = false;
     private void Awake()
     {
         Init();
@@ -34,11 +34,12 @@ public class CameraManager : MonoBehaviour
     }
     public bool initCamera()
     {
-        bool backCam = false;
+        
         WebCamDevice[] devices = WebCamTexture.devices;
         if (devices.Length == 0)
         {
-            UIManager.instance.outputText.text = "No Cameras Detected";           
+            UIManager.instance.outputText.text = "No Cameras Detected";
+            backCam = false;
         }
         else
         {
@@ -46,6 +47,7 @@ public class CameraManager : MonoBehaviour
             if (webcamTexture != null) webcamTexture.Stop();
             webcamTexture = new WebCamTexture(devices[0].name);
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = webcamTexture;
+            backCam = false;//just using any camera for testing
             webcamTexture.Play();
         }
        
