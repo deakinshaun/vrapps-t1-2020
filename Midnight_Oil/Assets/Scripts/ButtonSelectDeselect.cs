@@ -13,7 +13,9 @@ public class ButtonSelectDeselect : MonoBehaviour, IVirtualButtonEventHandler
     {
         if (selected==false)
         {
-            mat.GetComponent<Renderer>().material.color = new Color(1.1f, .9f, 0.5f);
+            //mat.GetComponent<Renderer>().material.color = new Color(1.1f, .9f, 0.5f);
+            Color yellow= new Color(1.1f, .9f, 0.5f);
+            mat.GetComponent<Renderer>().material.SetColor("_Color", yellow);
             mat.transform.position += new Vector3(0f, -0.005f, 0f);
             Debug.Log("ButtonSelected");
             selected = true;
@@ -21,7 +23,9 @@ public class ButtonSelectDeselect : MonoBehaviour, IVirtualButtonEventHandler
 
         else
         {
-            mat.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+            //mat.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+            Color white = new Color(1f,1f,1f);
+            mat.GetComponent<Renderer>().material.SetColor("_Color", white);
             mat.transform.position += new Vector3(0f, 0.005f, 0f);
             Debug.Log("Unselected");
             selected = false;
@@ -33,7 +37,6 @@ public class ButtonSelectDeselect : MonoBehaviour, IVirtualButtonEventHandler
     }
         void Start()
     {
-        Obj = GameObject.Find("Button");
 
         Obj.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
     }

@@ -35,7 +35,6 @@ public class ModelSwap : MonoBehaviour, IVirtualButtonEventHandler
     void Start()
     {
         HideObjects();
-        Obj = GameObject.Find("Button");
 
         Obj.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
     }
