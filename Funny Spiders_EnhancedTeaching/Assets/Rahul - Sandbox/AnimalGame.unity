@@ -303,6 +303,23 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 753846335407681373, guid: c207ddee904bc164e8ec820f78eef18e,
+        type: 3}
+      propertyPath: Animals.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 753846335407681373, guid: c207ddee904bc164e8ec820f78eef18e,
+        type: 3}
+      propertyPath: Animals.Array.data[2]
+      value: 
+      objectReference: {fileID: 273525985914399375, guid: 6ef377d3a4cc33d4cb05e98eaadd8971,
+        type: 3}
+    - target: {fileID: 753846335407681373, guid: c207ddee904bc164e8ec820f78eef18e,
+        type: 3}
+      propertyPath: Animals.Array.data[3]
+      value: 
+      objectReference: {fileID: 273525985914399375, guid: c26e238ac6644c148b97f587c7792e75,
+        type: 3}
     - target: {fileID: 2218381302846297513, guid: c207ddee904bc164e8ec820f78eef18e,
         type: 3}
       propertyPath: m_Name

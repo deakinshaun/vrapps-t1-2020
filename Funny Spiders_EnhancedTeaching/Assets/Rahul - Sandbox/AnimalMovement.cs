@@ -16,6 +16,7 @@ public class AnimalMovement : MonoBehaviour
     public float speed = 0.0f;
     public float Rspeed = 0.0f;
     public float tolerance = 2;
+    public bool home = false;
 
     public int waitTime = 0;
     //public Text debugText;
@@ -53,7 +54,7 @@ public class AnimalMovement : MonoBehaviour
                 if (Vector3.Distance(transform.position, Destination) < tolerance)
                 {
 
-                    Invoke("getNewDestination", 1);
+                    Invoke("getNewDestination", waitTime);
                     timer = false;
 
                 }
@@ -151,6 +152,14 @@ public class AnimalMovement : MonoBehaviour
         }
 
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+       if (other.gameObject.tag == "Habitat")
+            {
+            speed = 0;
+            home = true;
+            }
     }
 
 
