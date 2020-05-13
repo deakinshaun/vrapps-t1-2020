@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe46efa66462ff4d9126e0ea03938e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarPrefab: {fileID: 4055142919853872447, guid: a463a52d97a090045987361866da7c53,
+  avatarPrefab: {fileID: 8623378085506249887, guid: a463a52d97a090045987361866da7c53,
     type: 3}

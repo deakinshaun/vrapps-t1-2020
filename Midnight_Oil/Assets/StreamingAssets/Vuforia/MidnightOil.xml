@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Colour_10" size="0.100000 0.066625" />
+    <ImageTarget name="Colour_09" size="0.100000 0.075000" />
+    <ImageTarget name="Colour_08" size="0.100000 0.100000" />
+    <ImageTarget name="Colour_01" size="0.100000 0.100000" />
+    <ImageTarget name="Colour_02" size="0.100000 0.075000" />
+    <ImageTarget name="Colour_03" size="0.100000 0.105963" />
+    <ImageTarget name="Colour_04" size="0.100000 0.066625" />
+    <ImageTarget name="Colour_07" size="0.100000 0.066556" />
+    <ImageTarget name="Colour_06" size="0.100000 0.100000" />
+    <ImageTarget name="Colour_05" size="0.100000 0.099688" />
+  </Tracking>
+</QCARConfig>
