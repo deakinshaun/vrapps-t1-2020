@@ -19,8 +19,10 @@ public class FetchPose : MonoBehaviour
     private float poseMultiplier = 1;   
     public Texture background;
     private int numPointsInPose = 17;   
-    public PoseSkeleton poseSkeleton;
-    
+    public PoseSkeleton playerPoseSkeleton;
+    public PoseSkeleton expertPoseSkeleton;
+    private PoseSkeleton currentPoseSkeleton;
+
 
     private bool dataReady;
 
@@ -28,7 +30,17 @@ public class FetchPose : MonoBehaviour
     private bool isRecording = false;
     private Stopwatch watch;
     //private PoseClip currentClip;
-    public void toggleCapture()
+    public void recordPlayer()
+    {
+        currentPoseSkeleton = playerPoseSkeleton;
+        toggleCapture(PoseClip.Classification.Player,playerPoseSkeleton);
+    }
+    public void recordExpert()
+    {
+        currentPoseSkeleton = expertPoseSkeleton;
+        toggleCapture(PoseClip.Classification.Expert,expertPoseSkeleton);
+    }
+    public void toggleCapture(PoseClip.Classification clipType,PoseSkeleton skeleton)
     { 
         if(watch != null && CameraManager.instance.backCam)
         {
@@ -36,13 +48,13 @@ public class FetchPose : MonoBehaviour
             if (isRecording&& CameraManager.instance.initCamera())
             {  
                 watch.Start();
-                poseSkeleton.clip = new PoseClip();
+                skeleton.clip = new PoseClip(clipType);
             }
             else 
             {
                 isRecording = false;
                 watch.Stop();
-                poseSkeleton.clip.Stopped(watch.ElapsedMilliseconds);
+                skeleton.clip.Stopped(watch.ElapsedMilliseconds);
                 watch.Reset();
                 //TODO - prompt user to keep or discard
             }
@@ -117,10 +129,10 @@ public class FetchPose : MonoBehaviour
             
             if(pose.Length > 0)
             {
-                poseSkeleton.updatePose(pose);
+                currentPoseSkeleton.updatePose(pose);
                 //record frame
                 watch.Stop();
-                poseSkeleton.clip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));
+                currentPoseSkeleton.clip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));
                 watch.Start();
             }
         }

@@ -23,6 +23,12 @@ Added some buttons for the expert golf swing - these are currently playing/loadi
 Including a Test.json file with some motion captured with my phone - useful for testing on PC. The app reads this from Application.persistentDataPath + "/Test.json" which on my PC is:
 C:\Users\simulation\AppData\LocalLow\CloudTastic\Golf Swing\Test.json
 
+16/05/2020
+Added seperate player and expert functionality. Can now play 2 clips (player and expert) at the same time with independent play/pause/record/save/load/trim functions.
+Added functionality to trim from start and trim to end of a motion data clip - discard unwanted data.
+Added slider function to manually move through each frame
+Added a sync function to set a multiplier that is applied to the deltatime of each recorded frame. Allows the clip to play out over the same time frame as the other (longer) clip. To be used when comparing motion. 
+
 Before Building/Deploy:
 MainScene has RawImage & PoseVisualiser GameObjects to hold the FetchPose & PoseSkeleton scripts.
 The Posevisualiser/PoseSkeleton script has public variables for joint and bone prefabs that need to be assigned in the editor prior to building the project - these are the 3D meshes to display a skeleton.
