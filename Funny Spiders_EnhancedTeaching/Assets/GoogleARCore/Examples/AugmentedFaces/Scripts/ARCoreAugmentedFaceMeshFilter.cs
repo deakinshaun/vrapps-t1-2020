@@ -36,6 +36,8 @@ namespace GoogleARCore.Examples.AugmentedFaces
         /// </summary>
         public bool AutoBind = false;
 
+        public FaceOutputManager faceManagerScript;
+
         public Text debugText;
         public Text debugText2;
         public Text debugText3;
@@ -91,12 +93,14 @@ namespace GoogleARCore.Examples.AugmentedFaces
                 Session.GetTrackables<AugmentedFace>(m_AugmentedFaceList, TrackableQueryFilter.All);
                 if (m_AugmentedFaceList.Count != 0)
                 {
+                    faceManagerScript.isTrackingFace = true;
                     m_AugmentedFace = m_AugmentedFaceList[0];
                 }
             }
 
             if (m_AugmentedFace == null)
             {
+                faceManagerScript.isTrackingFace = false;
                 return;
             }
 
@@ -123,11 +127,13 @@ namespace GoogleARCore.Examples.AugmentedFaces
             float avgY = (((ay - m_MeshNormals[16].y) + (py - m_MeshNormals[16].y)) / 2) * -1;
             if (avgY > threshold)
             {
-                debugText.text = ("smiling" + avgY + threshold);
+               // debugText.text = ("smiling" + avgY + threshold);
+                faceManagerScript.isSmiling = true;
             }
             else
             {
-                debugText.text = ("Not smiling" + avgY + threshold);
+               // debugText.text = ("Not smiling" + avgY + threshold);
+                faceManagerScript.isSmiling = false;
             }
 
             //debugText.text = ("Vertex Position is: " + m_MeshNormals[11].x); //left side of mouth
@@ -141,7 +147,7 @@ namespace GoogleARCore.Examples.AugmentedFaces
             //  debugText3.text = ("Vertex Position is: " + (py - m_MeshNormals[16].y));
 
 
-            debugText2.text = ("Vertex Position is: " + ((((ay - m_MeshNormals[16].y) + (py - m_MeshNormals[16].y)) / 2) * -1));
+           // debugText2.text = ("Vertex Position is: " + ((((ay - m_MeshNormals[16].y) + (py - m_MeshNormals[16].y)) / 2) * -1));
 
 
 

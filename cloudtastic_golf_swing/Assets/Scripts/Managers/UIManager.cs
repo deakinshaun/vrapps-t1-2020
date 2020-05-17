@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject playButton;
+    /*public GameObject playButton;
     public GameObject pauseButton;
     public GameObject stopButton;
-    public GameObject recButton;
+    public GameObject recButton;*/
     public GameObject rawImage;
     public Texture background;
     

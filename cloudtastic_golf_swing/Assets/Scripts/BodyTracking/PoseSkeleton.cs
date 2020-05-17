@@ -27,19 +27,25 @@ public class PoseSkeleton : MonoBehaviour
         Right_ankle = 16
     };
 
-    [Tooltip("A marker prefab to represent pose points in the skeleton")]
+    [Tooltip("A marker prefab to represent pose joints in the skeleton")]
     public GameObject pointMarkerTemplate;
 
     [Tooltip("A prefab to represent a bone. Size and shape matching default cylinder")]
     public GameObject boneTemplate;
 
-   
+    public GameObject playButton;
+    public GameObject pauseButton;
+    public GameObject stopButton;
+    public GameObject recButton;
+    public Slider frameSlider;
 
     private GameObject[] markers;
    
     private int numPointsInPose;
 
     public PoseClip clip=null;
+    public PoseClip compareClip = null;
+    private int frame = 0;
     private int clipCounter = 0;
     private float poseMultiplier = 0;
     private bool playingClip = false;
@@ -96,6 +102,7 @@ public class PoseSkeleton : MonoBehaviour
         bones.Add(new SkeletonBone(BodyPart.Left_knee, BodyPart.Left_ankle));
         bones.Add(new SkeletonBone(BodyPart.Right_hip, BodyPart.Right_knee));
         bones.Add(new SkeletonBone(BodyPart.Right_knee, BodyPart.Right_ankle));
+               
     }
 
     private Vector3 poseToVector(float[] rawPoseData, int i, float poseMultiplier)
@@ -107,10 +114,7 @@ public class PoseSkeleton : MonoBehaviour
         else
         {
             return new Vector3(-1,-1,-1);
-        }
-            
-            //return new Vector3(-(10.0f * rawPoseData[i * 3 + 0]-5.0f ), 0.0f, -(10.0f * rawPoseData[i * 3 + 1]-5.0f ));
-       
+        }       
     }
 
     private void drawPosePoints(float[] rawPoseData)
@@ -178,16 +182,20 @@ public class PoseSkeleton : MonoBehaviour
     }
     public void Start()
     {
-        clipPlayer = PlayCoroutine();        
-        UIManager.instance.stopButton.SetActive(false);
-        UIManager.instance.pauseButton.SetActive(false);
+        clipPlayer = PlayCoroutine();
+        //UIManager.instance.stopButton.SetActive(false);
+        stopButton.SetActive(false);
+        //UIManager.instance.pauseButton.SetActive(false);
+        pauseButton.SetActive(false);
         if (clip != null)
         {
-            UIManager.instance.playButton.SetActive(true);
+            //UIManager.instance.playButton.SetActive(true);
+            playButton.SetActive(true);
         }
         else
         {
-            UIManager.instance.playButton.SetActive(false);
+            // UIManager.instance.playButton.SetActive(false);
+            playButton.SetActive(false);
         }
             
     }
@@ -199,10 +207,10 @@ public class PoseSkeleton : MonoBehaviour
         float[] empty = { };
         drawPosePoints(empty);
         drawSkeleton(empty);
-        UIManager.instance.stopButton.SetActive(false);
-        UIManager.instance.pauseButton.SetActive(false);
-        UIManager.instance.playButton.SetActive(true);
-        UIManager.instance.recButton.SetActive(true);
+        stopButton.SetActive(false);
+        pauseButton.SetActive(false);
+        playButton.SetActive(true);
+        recButton.SetActive(true);
         CameraManager.instance.initCamera();       
 
     }
@@ -213,30 +221,37 @@ public class PoseSkeleton : MonoBehaviour
         {
             paused = false;
             playingClip = true;
-            clipCounter = 0;
+            
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = UIManager.instance.background;
             poseMultiplier = UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height / 40f;  
             
-            UIManager.instance.stopButton.SetActive(true);
-            UIManager.instance.pauseButton.SetActive(true);
-            UIManager.instance.playButton.SetActive(false);
-            UIManager.instance.recButton.SetActive(false);           
+            stopButton.SetActive(true);
+            pauseButton.SetActive(true);
+            playButton.SetActive(false);
+            recButton.SetActive(false);           
             StartCoroutine(clipPlayer);
         }
-
     }
-    public void loadClip()
+    public void loadPlayerClip()
+    {
+        loadClip(PoseClip.Classification.Player);
+    }
+    public void LoadExpertClip()
+    {
+        loadClip(PoseClip.Classification.Expert);
+    }
+    public void loadClip(PoseClip.Classification clipType)
     {
         if (clip == null)
         {
-            clip = new PoseClip();
+            clip = new PoseClip(clipType);
         }
-        clip = clip.LoadClip(clip);  
+        clip = clip.LoadClip(clip, clipType);  
         if(clip !=null)
         {
             clipCounter = 0;
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = UIManager.instance.background;
-            UIManager.instance.playButton.SetActive(true);
+            playButton.SetActive(true);
         }
     }
     public void saveCurrentClip()
@@ -247,26 +262,63 @@ public class PoseSkeleton : MonoBehaviour
             clip.SaveClip();
         }
     }
+    public void TrimToEnd()
+    {
+        paused = true;        
+        clip.frames.RemoveRange(frame, clip.frames.Count - frame);
+        clipCounter = clip.frames.Count-1;
+        frame = clipCounter;
+        frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
+        //paused = false;
+    }
+    public void TrimFromStart()
+    {
+        clip.frames.RemoveRange(0, frame);
+    }
     IEnumerator PlayCoroutine()
-    {         
+    {        
         while (playingClip)
-            {
+        {
                 if (clip != null && clip.frames.Count > 0)
                 {
-                
-                    drawPosePoints(clip.frames[clipCounter].poseFrame);
-                    drawSkeleton(clip.frames[clipCounter].poseFrame);
                     if(!paused)
-                    {
+                    { 
+                        drawPosePoints(clip.frames[clipCounter].poseFrame);
+                        drawSkeleton(clip.frames[clipCounter].poseFrame);
+                        
+                        frame = clipCounter;
                         clipCounter++;
+                        
+                        frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
+                    
                         if (clipCounter >= clip.frames.Count)
                         {
                             clipCounter = 0;
                         }
-                    }
-                //yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime);
-                yield return new WaitForSecondsRealtime(clip.frames[clipCounter].deltaTime * playBackSpeed);
                 }
+                    else
+                    {                      
+                        clipCounter = frame;
+                        drawPosePoints(clip.frames[clipCounter].poseFrame);
+                        drawSkeleton(clip.frames[clipCounter].poseFrame);
+                    }
+                
+                     yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime * clip.syncFactor * playBackSpeed);
+                //yield return new WaitForSecondsRealtime(clip.frames[clipCounter].deltaTime * playBackSpeed);
+                }
+        }
+        
+    }
+    public void PlaybackFrame(float percentage)
+    {
+        paused = true; 
+        frame =(int) ((percentage/100) * clip.frames.Count); 
+        if(frame < 0)
+        {
+            frame = 0;
+        }else if(frame >= clip.frames.Count)
+        {
+            frame = clip.frames.Count - 1;
         }
         
     }
@@ -277,9 +329,15 @@ public class PoseSkeleton : MonoBehaviour
     
     public void pauseClip()
     {
-        UIManager.instance.pauseButton.SetActive(false);
-        paused = true;
-        UIManager.instance.playButton.SetActive(true);
+        if(paused)
+        {
+            paused = false;
+        }
+        else
+        {
+            paused = true;
+        }
+        
     }
     public void updatePose(float[] rawPoseData)
     {
