@@ -262,6 +262,14 @@ public class PoseSkeleton : MonoBehaviour
             clip.SaveClip();
         }
     }
+    public void shareCurrentClip(PoseClip.Classification clipType)
+    {
+        if (clip != null)
+        {
+            clip.name = "Test";
+            clip.ShareClip(clipType);
+        }
+    }
     public void TrimToEnd()
     {
         paused = true;        

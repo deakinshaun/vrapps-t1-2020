@@ -8,8 +8,14 @@
 
 		if (isset($_GET["VID"]) && isset($_GET["UID"]))
 		{
-			header("content-type: application/jsonS");
+			header("content-type: application/json");
 			echo getData($db, $_GET["VID"]);
+		}
+		if (isset($_GET["DATA"]))
+		{
+			if (!isset($_GET["TYPE"])) $_GET["TYPE"] = "PLAYER";
+			
+			setData($db,  $_GET["DATA"], $_GET["TYPE"]);
 		}
 		return 0;
 	}
@@ -26,20 +32,16 @@
 		else return "false";
 		// clear connected devices 
 	}
-	function setData($db)
+	function setData($db, $data, $type)
 	{
-				$str=rand(); 
-		$result = md5($str); 
-		$sql = "INSERT INTO sharedata (VID, UID, DATA) = '$result'";
+		$str=rand(); 
+		$id = md5($str); 
+		$sql = "INSERT INTO sharedata (VID, UID, TYPE, DATA) VALUES ('$id', '11ute4', '$data'";
 
 
 				if ($db->query($sql) === FALSE) {
 					echo("Error: " .  $db->error);
 				}
-			$result = $db -> query($sql);
-			
-		if ($result->num_rows > 0) return result;
-		else return "false";
 		// clear connected devices 
 	}
 ?>
