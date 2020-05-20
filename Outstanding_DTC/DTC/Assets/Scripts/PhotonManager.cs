@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.Unity;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
