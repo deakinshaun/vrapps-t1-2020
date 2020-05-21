@@ -130,7 +130,7 @@ MonoBehaviour:
   Rspeed: 5
   tolerance: 0.01
   home: 0
-  CorrectHab: Jungle
+  CorrectHab: Tundra
   initialSpeed: 0
   particals: {fileID: 8600504107929012238}
   waitTime: 4
