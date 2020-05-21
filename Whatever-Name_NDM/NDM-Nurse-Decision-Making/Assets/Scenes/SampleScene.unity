@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 91841448}
   - component: {fileID: 91841447}
   - component: {fileID: 91841446}
+  - component: {fileID: 91841449}
   m_Layer: 0
   m_Name: Scroll View
   m_TagString: Untagged
@@ -304,6 +305,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91841444}
   m_CullTransparentMesh: 0
+--- !u!114 &91841449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91841444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be76df72cbd7b6542ac8e6b682bb2170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClipboardTextbox: {fileID: 561847252}
+  PatientName: I'm big billy I'm the big wet billy
+  PatientGender: 
+  PatientAge: 
+  PatientAllergies: 
+  PatientHealthConditions: 
+  Clipboard: {fileID: 0}
 --- !u!1 &109829297
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +336,7 @@ GameObject:
   - component: {fileID: 109829301}
   - component: {fileID: 109829300}
   - component: {fileID: 109829299}
+  - component: {fileID: 109829302}
   m_Layer: 0
   m_Name: Viewport
   m_TagString: Untagged
@@ -392,6 +413,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109829297}
   m_CullTransparentMesh: 0
+--- !u!114 &109829302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109829297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 91841449}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &192771403
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +751,6 @@ GameObject:
   - component: {fileID: 561847251}
   - component: {fileID: 561847253}
   - component: {fileID: 561847252}
-  - component: {fileID: 561847254}
   m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
@@ -769,24 +817,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561847250}
   m_CullTransparentMesh: 0
---- !u!114 &561847254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561847250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be76df72cbd7b6542ac8e6b682bb2170, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ClipboardTextbox: {fileID: 561847252}
-  PatientName: I'm the big billy the big wet billy and I run
-  PatientGender: 
-  PatientAge: 
-  PatientAllergies: 
-  PatientHealthConditions: 
 --- !u!1 &583895587
 GameObject:
   m_ObjectHideFlags: 0

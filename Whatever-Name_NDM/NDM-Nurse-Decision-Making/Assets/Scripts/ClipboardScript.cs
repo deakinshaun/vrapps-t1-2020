@@ -12,6 +12,9 @@ public class ClipboardScript : MonoBehaviour
     public string PatientAllergies;
     public string PatientHealthConditions;
 
+    public GameObject Clipboard;
+    private bool PopupEnabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +24,11 @@ public class ClipboardScript : MonoBehaviour
                                 "Allergies: " + PatientAllergies + "\r\n" +
                                 "Health Conditions: " + PatientHealthConditions + "\r\n";
 
+    }
+
+    void Popup ()
+    {
+        PopupEnabled = true;
+        Debug.Log("Popup Enabled =" + PopupEnabled);
     }
 }
