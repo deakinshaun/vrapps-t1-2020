@@ -6,25 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-=======
->>>>>>> c94d21d299388ba169a855e4800afa97231b64f5
-    path: Assets/Scenes/SmileDetection.unity
-    guid: 7d2be221c0e8f4e259a08279fab0da42
-  - enabled: 0
-    path: Assets/PortalScene/Scene/Portal.unity
-    guid: 40b310c22894c664a91a959cefda2f09
-  - enabled: 1
     path: Assets/Rahul - Sandbox/AnimalGameFinal.unity
     guid: b124d7024091e414e95c505bdb5fb076
-  - enabled: 0
-    path: Assets/Scenes/HeartRateTest.unity
-    guid: d767563368cc5dc41a8d9e0fc13570b6
-=======
-  - enabled: 0
-    path: Assets/Scenes/TeacherTrackingArea.unity
-    guid: f182c914e0ef4254fa99777e93728d5f
-  - enabled: 0
-    path: Assets/Scenes/TeacherView.unity
-    guid: 682c58d317bc44f45a144b1310f5ff96
->>>>>>> c94d21d299388ba169a855e4800afa97231b64f5
+  - enabled: 1
+    path: Assets/Andy Scene/Game.unity
+    guid: 7d85dd252cb69d846aab89678afd76b7
   m_configObjects: {}

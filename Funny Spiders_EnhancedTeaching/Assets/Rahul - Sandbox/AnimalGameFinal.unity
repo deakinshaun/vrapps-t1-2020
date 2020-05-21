@@ -177,6 +177,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c10877f7cd5764de18d46d7b777d1faa, type: 3}
+--- !u!4 &97747991 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4497055787654456, guid: c10877f7cd5764de18d46d7b777d1faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 97747990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &150429108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -696,12 +702,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf498fc35b538884db557f7a9a2c0ef9, type: 3}
---- !u!4 &1745228852 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4497055787654456, guid: c10877f7cd5764de18d46d7b777d1faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 97747990}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910251552
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +794,7 @@ Transform:
   m_LocalPosition: {x: 0.26, y: 0.46, z: 1.15}
   m_LocalScale: {x: 0.01, y: 0.01, z: 2.491497}
   m_Children: []
-  m_Father: {fileID: 1745228852}
+  m_Father: {fileID: 97747991}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1910251557
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedMat: {fileID: 2100000, guid: 571408b4672371948bccfe08487c4cfc, type: 2}
   animalMovementScript: {fileID: 0}
-  debugtext: {fileID: 222181898}
+  debugtext: {fileID: 0}
 --- !u!54 &1910251558
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -4,53 +4,66 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class Gaze : MonoBehaviour
+public class Gaze: MonoBehaviour
 {
 
-    List<InfoBehavior> infos = new List<InfoBehavior>();
+    public GameObject checkOptionAnimal, congratPage, questionScreen;
+
+    private bool animalCorrect = false;
+
+    public Text debug;
+
+    public AudioSource source;
+    public AudioClip incorrect;
 
     void Start()
     {
-        infos = FindObjectsOfType<InfoBehavior>().ToList();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(transform.position,transform.forward, out RaycastHit hit))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit))
         {
             GameObject go = hit.collider.gameObject;
-            if (go.CompareTag("Info"))
+            if ((go.CompareTag("Tiger")) || (go.CompareTag("Elephant")) || (go.CompareTag("Monkey")) ||
+                (go.CompareTag("Sheep")) || (go.CompareTag("Whale")))
             {
-                OpenInfo(go.GetComponent<InfoBehavior>());
+                debug.text = "FOUND IT";
+                checkOptionAnimal.SetActive(true);
+            }
+
+            if (go.CompareTag("Tiger"))
+            {
+                debug.text = "FOUND TIGER";
+                CheckTiger();
             }
         }
         else
         {
-            CloseAll();
+            debug.text = "NOTHING";
+            checkOptionAnimal.SetActive(false);
         }
     }
 
-    void OpenInfo(InfoBehavior desirerdInfo)
+    public void CheckTiger()
     {
-        foreach (InfoBehavior info in infos)
+        if (Input.GetMouseButtonDown(0))
         {
-            if(info == desirerdInfo)
-            {
-                info.OpenInfo();
-            }
-            else
-            {
-                info.CloseInfo();
-            }
+            source.Play();
+            StartCoroutine(CongratPanel());
+        }
+        else
+        {
+            source.clip = incorrect;
         }
     }
 
-    void CloseAll()
+    IEnumerator CongratPanel()
     {
-        foreach (InfoBehavior info in infos)
-        {
-            info.CloseInfo();
-        }
+        yield return new WaitForSeconds(2);
+        congratPage.SetActive(true);
+        questionScreen.SetActive(false);
     }
 }
