@@ -48,6 +48,8 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public GameObject GameObjectVerticalPlanePrefab;
 
+        public PlaneDiscoveryGuide pdg; 
+
         /// <summary>
         /// A prefab to place when a raycast from a user touch hits a horizontal plane.
         /// </summary>
@@ -155,6 +157,8 @@ namespace GoogleARCore.Examples.HelloAR
                         // Make game object a child of the anchor.
                         gameObject.transform.parent = anchor.transform;
                         HasSpawnedObject = true;
+                        pdg.spawned = true;
+
                     }
                 }
             }

@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Rahul - Sandbox/AnimalGameFinal.unity
     guid: b124d7024091e414e95c505bdb5fb076
-  - enabled: 1
-    path: Assets/Andy Scene/Game.unity
-    guid: 7d85dd252cb69d846aab89678afd76b7
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
