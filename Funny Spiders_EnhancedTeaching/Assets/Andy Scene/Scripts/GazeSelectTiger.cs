@@ -12,38 +12,61 @@ public class GazeSelectTiger: MonoBehaviour
     private bool animalCorrect = false;
 
     public Text debug;
+    public Material selectedMaterial;
+    public Material DefaultMat;
+    private GameObject selectedObject;
 
     public AudioSource correct;
     public AudioSource fail;
 
     void Start()
     {
-
+        selectedObject = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             GameObject go = hit.collider.gameObject;
-            if ((go.CompareTag("Elephant")) || (go.CompareTag("Monkey")) ||
-                (go.CompareTag("Sheep")) || (go.CompareTag("Whale")))
+            if ((go.CompareTag("Monkey")) || (go.CompareTag("Sheep")) ||
+                (go.CompareTag("Whale")) || (go.CompareTag("Elephant")))
             {
-                debug.text = "FOUND IT";
+                debug.text = "FOUND ANIMAL";
                 checkOptionAnimal.SetActive(true);
+                if (selectedObject == null)
+                {
+                    selectedObject = go;
+                    DefaultMat = selectedObject.GetComponent<Renderer>().material;
+                    selectedObject.GetComponent<Renderer>().material = selectedMaterial;
+                }
                 CheckWrong();
             }
-            else if ((go.CompareTag("Tiger")))
+            else if (go.CompareTag("Tiger"))
             {
+                debug.text = "FOUND ANIMAL";
+                checkOptionAnimal.SetActive(true);
+                
+                if (selectedObject == null)
+                {
+                    selectedObject = go;
+                    DefaultMat = selectedObject.GetComponent<Renderer>().material;
+                    selectedObject.GetComponent<Renderer>().material = selectedMaterial;
+                }
                 CheckTiger();
-                debug.text = "FOUND TIGER";
             }
         }
         else
         {
+            checkOptionAnimal.SetActive(false);
+            if (DefaultMat != null)
+            {
+                selectedObject.GetComponent<Renderer>().material = DefaultMat;
+                selectedObject = null;
+            }
             debug.text = "NOTHING";
         }
     }
