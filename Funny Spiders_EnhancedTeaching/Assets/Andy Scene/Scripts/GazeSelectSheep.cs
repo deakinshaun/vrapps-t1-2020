@@ -12,19 +12,22 @@ public class GazeSelectSheep: MonoBehaviour
     private bool animalCorrect = false;
 
     public Text debug;
+    public Material selectedMaterial;
+    public Material DefaultMat;
+    private GameObject selectedObject;
 
     public AudioSource correct;
     public AudioSource fail;
 
     void Start()
     {
-
+        selectedObject = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -32,17 +35,38 @@ public class GazeSelectSheep: MonoBehaviour
             if ((go.CompareTag("Tiger")) || (go.CompareTag("Elephant")) ||
                 (go.CompareTag("Monkey")) || (go.CompareTag("Whale")))
             {
-                debug.text = "FOUND IT";
+                debug.text = "FOUND ANIMAL";
                 checkOptionAnimal.SetActive(true);
+                if (selectedObject == null)
+                {
+                    selectedObject = go;
+                    DefaultMat = selectedObject.GetComponent<Renderer>().material;
+                    selectedObject.GetComponent<Renderer>().material = selectedMaterial;
+                }
+                CheckWrong();
             }
             else if (go.CompareTag("Sheep"))
             {
+                debug.text = "FOUND ANIMAL";
+                checkOptionAnimal.SetActive(true);
+
+                if (selectedObject == null)
+                {
+                    selectedObject = go;
+                    DefaultMat = selectedObject.GetComponent<Renderer>().material;
+                    selectedObject.GetComponent<Renderer>().material = selectedMaterial;
+                }
                 CheckSheep();
-                debug.text = "FOUND SHEEP";
             }
         }
         else
         {
+            checkOptionAnimal.SetActive(false);
+            if (DefaultMat != null)
+            {
+                selectedObject.GetComponent<Renderer>().material = DefaultMat;
+                selectedObject = null;
+            }
             debug.text = "NOTHING";
         }
     }
