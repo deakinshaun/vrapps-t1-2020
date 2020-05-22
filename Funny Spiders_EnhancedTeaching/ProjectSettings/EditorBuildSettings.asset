@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/SmileDetection.unity
+    guid: 7d2be221c0e8f4e259a08279fab0da42
   m_configObjects: {}
