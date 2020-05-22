@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 =======
+<<<<<<< HEAD
 guid: 6783d9d5c2d3f584dbc0f829cfaf9bed
+=======
+guid: 51205c8c8252fc343bcd5902a40761fb
+>>>>>>> f16365d135c021e9ffaae822817766c78a939c10
 >>>>>>> 824abecb25ed0f8aa1e2cc04ed1cb314b8696d59:Funny Spiders_EnhancedTeaching/Assets/Scenes/VisualRecognition.unity.meta
 DefaultImporter:
   externalObjects: {}

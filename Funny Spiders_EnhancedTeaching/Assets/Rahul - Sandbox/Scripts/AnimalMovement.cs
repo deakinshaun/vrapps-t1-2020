@@ -19,6 +19,12 @@ public class AnimalMovement : MonoBehaviour
     public bool home = false;
     public string CorrectHab;
     public float initialSpeed;
+    public bool axisUp = false;
+    private Vector3 newDirection;
+
+    public AudioClip Sound_1;
+    public AudioClip Sound_2;
+    public AudioSource audioSource;
 
     public ParticleSystem particals;
     public int waitTime = 0;
@@ -58,6 +64,7 @@ public class AnimalMovement : MonoBehaviour
                 {
 
                     Invoke("getNewDestination", waitTime);
+                    PlaySounds();
                     timer = false;
 
                 }
@@ -93,8 +100,19 @@ public class AnimalMovement : MonoBehaviour
         if (isMoving == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            
+            if (!axisUp)
+            {
+                newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDirection);
+            }
+            else if(axisUp)
+            {
+                newDirection = Vector3.RotateTowards(-transform.up, targetDirection, singleStep, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDirection);
+                transform.Rotate(-90, 0, 0);
+            }
+            
         }
 
     }
@@ -117,8 +135,18 @@ public class AnimalMovement : MonoBehaviour
 
 
         transform.position = Vector3.MoveTowards(transform.position, destination, step);
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection);
+        if (!axisUp)
+        {
+            newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+        }
+        else if (axisUp)
+        {
+            newDirection = Vector3.RotateTowards(-transform.up, targetDirection, singleStep, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+            transform.Rotate(-90, 0, 0);
+        }
+        
 
 
     }
@@ -184,4 +212,26 @@ public class AnimalMovement : MonoBehaviour
         speed = initialSpeed;
     }
 
+    public void PlaySounds()
+     {
+        float selectorFloat = Random.value;
+        if (selectorFloat >= 0.5)
+        {
+            if ((Sound_1 != null) && (Sound_2 != null))
+            {
+                selectorFloat = Random.value;
+                if (selectorFloat >= 0.5)
+                {
+                    AudioSource.PlayClipAtPoint(Sound_1, transform.position);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(Sound_2, transform.position);
+                }
+
+            }
+        }
+            
+
+    }
 }
