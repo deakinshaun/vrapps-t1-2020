@@ -3,25 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 
+//A container for posedata related to a single motion data capture. (clip)
 public class PoseClip
 {    
     public long durationMilliseconds = 0;
     public string name;
-    public float syncFactor = 1;
-    public List<PoseData> frames = null;
-    public string webPath = "http://localhost/";
-
-    private Classification clipType;
-    private string functionPHP = "functions.php";
+    public float syncFactor = 1;   
+    public List<PoseData> frames = null;    
+    public Classification clipType;
     public enum Classification
     {
         Expert,
         Player
     }
     private IEnumerator fileSaver;
-    private IEnumerator fileShare;
     private IEnumerator fileLoader;
 
     public PoseClip(Classification clipType)
@@ -60,6 +56,7 @@ public class PoseClip
         clip.frames = this.frames.ToArray();
         string data = JsonUtility.ToJson(clip);
         string path = Application.persistentDataPath;
+        this.clipType = clipType;
         switch (clipType)
         {
             case Classification.Expert:
@@ -85,8 +82,8 @@ public class PoseClip
     }
 
     public PoseClip LoadClip(PoseClip poseClip,Classification clipType)
-    { 
-        UnityWebRequest www = new UnityWebRequest();   
+    {
+        poseClip.clipType = clipType;
         string path = Application.persistentDataPath;
         switch (clipType)
         {
@@ -112,36 +109,4 @@ public class PoseClip
             return null;
         }
     }
-
-    public void ShareClip(Classification clipType)
-    {
-        fileShare = JsonShare(clipType);
-        GameManager.instance.StartCoroutine(fileShare);
-    }
-    IEnumerator JsonShare(Classification clipType)
-    {
-        PoseClipToSave clip;
-        clip.durationMilliseconds = this.durationMilliseconds;
-        clip.name = this.name;
-        clip.frames = this.frames.ToArray();
-        string data = JsonUtility.ToJson(clip);
-        switch (clipType)
-        {
-            case Classification.Expert:
-                break;
-            case Classification.Player:
-                break;
-        }
-
-        Debug.Log("dataToWrite=" + data);
-        try
-        {
-        }
-        catch (Exception e)
-        {
-        }
-        yield return null;
-    }
-
-
 }
