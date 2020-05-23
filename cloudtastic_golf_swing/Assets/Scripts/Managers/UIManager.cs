@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject rawImage;
     public Texture background;
     
-    public Text outputText;
+    public TextMeshProUGUI outputText;
     //public CameraManager cameraManager;
 
     public static UIManager instance;

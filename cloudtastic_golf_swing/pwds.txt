@@ -1,0 +1,7 @@
+ftp://ftp.newmanscaravan.biz
+sit383@sit383.newmanscaravan.biz
+password: ThisIsThePassword4 
+
+mysql https://sit383.newmanscaravan.biz/myadmin
+user: newcarav_sit383
+password: as above  
