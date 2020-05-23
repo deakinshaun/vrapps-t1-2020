@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//a utility class to enable disable the camera
 public class CameraManager : MonoBehaviour
 {
     public WebCamTexture webcamTexture;
@@ -65,6 +66,11 @@ public class CameraManager : MonoBehaviour
         }
         return backCam;
 
+    }
+
+    public void stopCamera()
+    {
+        webcamTexture.Stop();
     }
     
 }
