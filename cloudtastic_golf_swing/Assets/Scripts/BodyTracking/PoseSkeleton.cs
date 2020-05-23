@@ -266,14 +266,6 @@ public class PoseSkeleton : MonoBehaviour
             clip.SaveClip();
         }
     }
-    public void shareCurrentClip(PoseClip.Classification clipType)
-    {
-        if (clip != null)
-        {
-            clip.name = "Test";
-            clip.ShareClip(clipType);
-        }
-    }
     public void TrimToEnd()
     {
         paused = true;
@@ -297,7 +289,7 @@ public class PoseSkeleton : MonoBehaviour
                 {
                     drawPosePoints(clip.frames[clipCounter].poseFrame);
                     drawSkeleton(clip.frames[clipCounter].poseFrame);
-                    info.text = "Frame: " + frame;
+                    info.text = ": " + frame;
                     frame = clipCounter;
                     clipCounter++;
 
@@ -311,7 +303,7 @@ public class PoseSkeleton : MonoBehaviour
                 else
                 {
                     clipCounter = frame;
-                    info.text = "Frame: " + frame;
+                    info.text = ": " + frame;
                     drawPosePoints(clip.frames[clipCounter].poseFrame);
                     drawSkeleton(clip.frames[clipCounter].poseFrame);
                 }
@@ -336,7 +328,7 @@ public class PoseSkeleton : MonoBehaviour
             {
                 frame = clip.frames.Count - 1;
             }
-            info.text = "Frame: " + frame;
+            info.text = ": " + frame;
         }
     }
     public void PlayBackSpeed(float val)

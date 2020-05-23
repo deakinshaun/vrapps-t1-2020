@@ -117,9 +117,9 @@ public class SynchClips : MonoBehaviour
                     mostFramesClip = playerClip;
                     leastFramesClip = expertClip;
                     synchedClip = new PoseClip(PoseClip.Classification.Expert);
-                }
-                else
-                {
+        }
+        else
+        {
                     mostFramesClip = expertClip;
                     leastFramesClip = playerClip;
                     synchedClip = new PoseClip(PoseClip.Classification.Player);
@@ -167,7 +167,7 @@ public class SynchClips : MonoBehaviour
     {
         float clipDuration = 0;
         PoseData startFrame = clip.frames[0];
-        PoseData endFrame = clip.frames[clip.frames.Count - 1];
+        PoseData endFrame = clip.frames[clip.frames.Count-1];
         clipDuration = endFrame.timeStamp - startFrame.timeStamp - startFrame.deltaTime * 1000;
         return clipDuration;
     }

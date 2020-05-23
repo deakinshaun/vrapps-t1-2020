@@ -20,7 +20,7 @@ public class Help : MonoBehaviour
             helpEnabled = false;
         }
         else
-        {           
+        {            
             helpCanvas.SetActive(true);
             helpEnabled = true;
         }
