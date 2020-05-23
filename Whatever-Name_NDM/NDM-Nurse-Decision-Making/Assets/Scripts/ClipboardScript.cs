@@ -32,10 +32,21 @@ public class ClipboardScript : MonoBehaviour
         PopupEnabled = true;
         Debug.Log("Popup Enabled =" + PopupEnabled);
     }
+
     private void PopupFalse ()
     {
     PopupEnabled = false;
     Debug.Log("Popup Enabled =" + PopupEnabled);
+    }
+
+    public void SugeonRefresh()
+    {
+        ClipboardTextbox.text = "Patient Information" + "\r\n" +
+                                "Name: " + PatientName + "\r\n" +
+                                "Gender: " + PatientGender + "\r\n" +
+                                "Age: " + PatientAge + "\r\n" +
+                                "Allergies: " + PatientAllergies + "\r\n" +
+                                "Health Conditions: " + PatientHealthConditions + "\r\n";
     }
 
     public void Popup ()
