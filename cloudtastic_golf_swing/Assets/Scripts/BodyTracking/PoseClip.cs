@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-
+//A container for posedata related to a single motion data capture. (clip)
 public class PoseClip
 {    
     public long durationMilliseconds = 0;
     public string name;
-    public float syncFactor = 1;
-    public List<PoseData> frames = null;
-    
-    private Classification clipType;
+    public float syncFactor = 1;   
+    public List<PoseData> frames = null;    
+    public Classification clipType;
     public enum Classification
     {
         Expert,
@@ -57,6 +56,7 @@ public class PoseClip
         clip.frames = this.frames.ToArray();
         string data = JsonUtility.ToJson(clip);
         string path = Application.persistentDataPath;
+        this.clipType = clipType;
         switch (clipType)
         {
             case Classification.Expert:
@@ -82,7 +82,8 @@ public class PoseClip
     }
 
     public PoseClip LoadClip(PoseClip poseClip,Classification clipType)
-    {       
+    {
+        poseClip.clipType = clipType;
         string path = Application.persistentDataPath;
         switch (clipType)
         {

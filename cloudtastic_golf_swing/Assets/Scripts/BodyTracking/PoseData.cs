@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+//A serializable class for each frame
 [Serializable]
 public class PoseData
 {       

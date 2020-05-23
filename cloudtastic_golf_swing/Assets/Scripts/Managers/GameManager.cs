@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Only ended up using this to switch scenes.
 public class GameManager : MonoBehaviour
 {
     private IEnumerator sceneSwitcher;
@@ -24,7 +25,9 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-    }
+    }   
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,16 +49,6 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("MainMenu");
     }
 
-    /*
-     * possible game states/control flags
-     * basic            - load mocap data (own or target), back button
-     * mocapLoaded1      - edit,play,record,back button, load mocap
-     * mocapLoaded2      - edit,play,record,compare,back button, load mocap
-     * cameraReady      - back button, load mocap
-     * trackingReady    - record, back button, load mocap
-     * tracking         - none
-     * playing          - pause, playback speed, back button
-     * editing          - trimStart, trimEnd, done 
-     * 
-     * */
+   
+
 }

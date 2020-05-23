@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//contains the functions to display motion data, and initiate most of the gui actions
 public class PoseSkeleton : MonoBehaviour
 {
     enum BodyPart : int
@@ -32,7 +33,7 @@ public class PoseSkeleton : MonoBehaviour
 
     [Tooltip("A prefab to represent a bone. Size and shape matching default cylinder")]
     public GameObject boneTemplate;
-
+    public Text info;
     public GameObject playButton;
     public GameObject pauseButton;
     public GameObject stopButton;
@@ -40,10 +41,10 @@ public class PoseSkeleton : MonoBehaviour
     public Slider frameSlider;
 
     private GameObject[] markers;
-   
+
     private int numPointsInPose;
 
-    public PoseClip clip=null;
+    public PoseClip clip = null;
     public PoseClip compareClip = null;
     private int frame = 0;
     private int clipCounter = 0;
@@ -52,6 +53,7 @@ public class PoseSkeleton : MonoBehaviour
     private bool paused = false;
     private float playBackSpeed = 1;
     private IEnumerator clipPlayer;
+    private PoseClip.Classification clipType;
 
     class SkeletonBone
     {
@@ -102,19 +104,19 @@ public class PoseSkeleton : MonoBehaviour
         bones.Add(new SkeletonBone(BodyPart.Left_knee, BodyPart.Left_ankle));
         bones.Add(new SkeletonBone(BodyPart.Right_hip, BodyPart.Right_knee));
         bones.Add(new SkeletonBone(BodyPart.Right_knee, BodyPart.Right_ankle));
-               
+
     }
 
     private Vector3 poseToVector(float[] rawPoseData, int i, float poseMultiplier)
     {
-        if(rawPoseData.Length > 0)
+        if (rawPoseData.Length > 0)
         {
             return new Vector3(-(10.0f * rawPoseData[i * 3 + 0] - 5.0f), 0.0f, -(poseMultiplier * rawPoseData[i * 3 + 1] - 5.0f));
         }
         else
         {
-            return new Vector3(-1,-1,-1);
-        }       
+            return new Vector3(-1, -1, -1);
+        }
     }
 
     private void drawPosePoints(float[] rawPoseData)
@@ -127,11 +129,9 @@ public class PoseSkeleton : MonoBehaviour
                 markers[i].transform.SetParent(this.transform, false);
                 markers[i].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             }
-
-            //markers[i].transform.localPosition = poseToVector(rawPoseData, i, poseMultiplier);
-            if (rawPoseData.Length> 0 && rawPoseData[i * 3 + 2] < 0.0f)
+            if (rawPoseData.Length > 0 && rawPoseData[i * 3 + 2] < 0.0f)
             {
-               
+
                 markers[i].SetActive(false);
             }
             else
@@ -183,24 +183,20 @@ public class PoseSkeleton : MonoBehaviour
     public void Start()
     {
         clipPlayer = PlayCoroutine();
-        //UIManager.instance.stopButton.SetActive(false);
         stopButton.SetActive(false);
-        //UIManager.instance.pauseButton.SetActive(false);
         pauseButton.SetActive(false);
         if (clip != null)
         {
-            //UIManager.instance.playButton.SetActive(true);
             playButton.SetActive(true);
         }
         else
         {
-            // UIManager.instance.playButton.SetActive(false);
             playButton.SetActive(false);
         }
-            
     }
+
     public void stopPlay()
-    {      
+    {
         clipCounter = 0;
         playingClip = false;
         StopCoroutine(clipPlayer);
@@ -211,34 +207,42 @@ public class PoseSkeleton : MonoBehaviour
         pauseButton.SetActive(false);
         playButton.SetActive(true);
         recButton.SetActive(true);
-        CameraManager.instance.initCamera();       
-
+        CameraManager.instance.initCamera();
     }
 
     public void PlayClip()
     {
-        if (clip != null&&clip.frames.Count > 0)
+        if (clip != null && clip.frames.Count > 0)
         {
             paused = false;
             playingClip = true;
-            
+
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = UIManager.instance.background;
-            poseMultiplier = UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height / 40f;  
-            
+            poseMultiplier = UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height / 40f;
+
             stopButton.SetActive(true);
             pauseButton.SetActive(true);
             playButton.SetActive(false);
-            recButton.SetActive(false);           
+            recButton.SetActive(false);
+            CameraManager.instance.stopCamera();
             StartCoroutine(clipPlayer);
         }
     }
     public void loadPlayerClip()
     {
         loadClip(PoseClip.Classification.Player);
+        if (clip != null)
+        {
+            this.clipType = PoseClip.Classification.Player;
+        }
     }
     public void LoadExpertClip()
     {
         loadClip(PoseClip.Classification.Expert);
+        if (clip != null)
+        {
+            this.clipType = PoseClip.Classification.Expert;
+        }
     }
     public void loadClip(PoseClip.Classification clipType)
     {
@@ -246,8 +250,8 @@ public class PoseSkeleton : MonoBehaviour
         {
             clip = new PoseClip(clipType);
         }
-        clip = clip.LoadClip(clip, clipType);  
-        if(clip !=null)
+        clip = clip.LoadClip(clip, clipType);
+        if (clip != null)
         {
             clipCounter = 0;
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = UIManager.instance.background;
@@ -264,9 +268,9 @@ public class PoseSkeleton : MonoBehaviour
     }
     public void TrimToEnd()
     {
-        paused = true;        
+        paused = true;
         clip.frames.RemoveRange(frame, clip.frames.Count - frame);
-        clipCounter = clip.frames.Count-1;
+        clipCounter = clip.frames.Count - 1;
         frame = clipCounter;
         frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
         //paused = false;
@@ -276,73 +280,79 @@ public class PoseSkeleton : MonoBehaviour
         clip.frames.RemoveRange(0, frame);
     }
     IEnumerator PlayCoroutine()
-    {        
+    {
         while (playingClip)
         {
-                if (clip != null && clip.frames.Count > 0)
+            if (clip != null && clip.frames.Count > 0)
+            {
+                if (!paused)
                 {
-                    if(!paused)
-                    { 
-                        drawPosePoints(clip.frames[clipCounter].poseFrame);
-                        drawSkeleton(clip.frames[clipCounter].poseFrame);
-                        
-                        frame = clipCounter;
-                        clipCounter++;
-                        
-                        frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
-                    
-                        if (clipCounter >= clip.frames.Count)
-                        {
-                            clipCounter = 0;
-                        }
-                }
-                    else
-                    {                      
-                        clipCounter = frame;
-                        drawPosePoints(clip.frames[clipCounter].poseFrame);
-                        drawSkeleton(clip.frames[clipCounter].poseFrame);
+                    drawPosePoints(clip.frames[clipCounter].poseFrame);
+                    drawSkeleton(clip.frames[clipCounter].poseFrame);
+                    info.text = "Frame: " + frame;
+                    frame = clipCounter;
+                    clipCounter++;
+
+                    frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
+
+                    if (clipCounter >= clip.frames.Count)
+                    {
+                        clipCounter = 0;
                     }
-                
-                     yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime * clip.syncFactor * playBackSpeed);
-                //yield return new WaitForSecondsRealtime(clip.frames[clipCounter].deltaTime * playBackSpeed);
                 }
+                else
+                {
+                    clipCounter = frame;
+                    info.text = "Frame: " + frame;
+                    drawPosePoints(clip.frames[clipCounter].poseFrame);
+                    drawSkeleton(clip.frames[clipCounter].poseFrame);
+                }
+
+                yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime * clip.syncFactor * playBackSpeed);
+                //yield return new WaitForSecondsRealtime(clip.frames[clipCounter].deltaTime * playBackSpeed);
+            }
         }
-        
+
     }
     public void PlaybackFrame(float percentage)
     {
-        paused = true; 
-        frame =(int) ((percentage/100) * clip.frames.Count); 
-        if(frame < 0)
+        if (clip != null)
         {
-            frame = 0;
-        }else if(frame >= clip.frames.Count)
-        {
-            frame = clip.frames.Count - 1;
+            paused = true;
+            frame = (int)((percentage / 100) * clip.frames.Count);
+            if (frame < 0)
+            {
+                frame = 0;
+            }
+            else if (frame >= clip.frames.Count)
+            {
+                frame = clip.frames.Count - 1;
+            }
+            info.text = "Frame: " + frame;
         }
-        
     }
-   public void PlayBackSpeed(float val)
+    public void PlayBackSpeed(float val)
     {
         playBackSpeed = val;
     }
-    
+
     public void pauseClip()
     {
-        if(paused)
+        if (paused)
         {
             paused = false;
         }
         else
         {
             paused = true;
+
         }
-        
     }
+
     public void updatePose(float[] rawPoseData)
     {
         poseMultiplier = UIManager.instance.rawImage.GetComponent<RawImage>().mainTexture.height / 40f;
         drawPosePoints(rawPoseData);
         drawSkeleton(rawPoseData);
-    }   
+    }
 }
