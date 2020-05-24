@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
 // <copyright file="PlaneDiscoveryGuide.cs" company="Google">
 //
 // Copyright 2018 Google LLC. All Rights Reserved.
@@ -40,6 +40,7 @@ namespace GoogleARCore.Examples.Common
         [Tooltip("The time to delay, after ARCore loses tracking of any planes, showing the plane " +
                  "discovery guide.")]
         public float DisplayGuideDelay = 3.0f;
+        public bool spawned = false;
 
         /// <summary>
         /// The time to delay, after displaying the plane discovery guide, offering more detailed
@@ -156,8 +157,12 @@ namespace GoogleARCore.Examples.Common
         /// </summary>
         public void Update()
         {
-            _UpdateDetectedPlaneTrackingState();
-            _UpdateUI();
+            if (!spawned)
+            {
+                _UpdateDetectedPlaneTrackingState();
+                _UpdateUI();
+                m_FeaturePoints.SetActive(false);
+            }
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ using System.Diagnostics;
 // Retrieve pose information from the native posenet/tensorflow lite facilities.
 // Also includes some visual elements, to show camera feed and monitor retrieved
 // values.
+//adds timing data to the motion capture frames for comparison of motion and plater playback.
 
 public class FetchPose : MonoBehaviour
 {
@@ -28,8 +29,7 @@ public class FetchPose : MonoBehaviour
 
 
     private bool isRecording = false;
-    private Stopwatch watch;
-    //private PoseClip currentClip;
+    private Stopwatch watch;    
     public void recordPlayer()
     {
         currentPoseSkeleton = playerPoseSkeleton;
@@ -56,6 +56,16 @@ public class FetchPose : MonoBehaviour
                 watch.Stop();
                 skeleton.clip.Stopped(watch.ElapsedMilliseconds);
                 watch.Reset();
+                if(clipType == PoseClip.Classification.Expert)
+                {//enable play button
+                    UIManager.instance.outputText.text = "expert clip recorded -save?";
+                    UIManager.instance.expertPlayButton.SetActive(true);
+//
+                } else{
+                    //assume it is player
+                    UIManager.instance.outputText.text = "player clip recorded -save?";
+                    UIManager.instance.playerPlayButton.SetActive(true);
+                }
                 //TODO - prompt user to keep or discard
             }
         }
@@ -130,6 +140,10 @@ public class FetchPose : MonoBehaviour
             if(pose.Length > 0)
             {
                 currentPoseSkeleton.updatePose(pose);
+                if(currentPoseSkeleton.clip.frames.Count ==0)
+                {
+                    watch.Reset();
+                }
                 //record frame
                 watch.Stop();
                 currentPoseSkeleton.clip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));

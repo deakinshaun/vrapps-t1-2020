@@ -6,10 +6,19 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    /*public GameObject playButton;
-    public GameObject pauseButton;
-    public GameObject stopButton;
-    public GameObject recButton;*/
+    public GameObject playerPlayButton;
+    public GameObject playerPauseButton;
+    public GameObject playerStopButton;
+    public GameObject playerRecButton;
+    public GameObject playerSaveButton;
+    public GameObject playerLoadButton;
+    public GameObject expertPlayButton;
+    public GameObject expertPauseButton;
+    public GameObject expertStopButton;
+    public GameObject expertRecButton;
+    public GameObject expertSaveButton;
+    public GameObject expertLoadButton;
+
     public GameObject rawImage;
     public Texture background;
     
