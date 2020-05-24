@@ -258,6 +258,33 @@ public class PoseSkeleton : MonoBehaviour
             playButton.SetActive(true);
         }
     }
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
+    public void loadSharedClip(PoseClip.Classification clipType = PoseClip.Classification.Player)
+    {
+        if (clip == null)
+        {
+            clip = new PoseClip(clipType);
+        }
+        clip = clip.LoadSharedClip(clip, clipType);
+        if (clip != null)
+        {
+            clipCounter = 0;
+            UIManager.instance.rawImage.GetComponent<RawImage>().texture = UIManager.instance.background;
+            playButton.SetActive(true);
+        }
+    }
+
+
+    public void shareCurrentClip()
+    {
+        if (clip != null)
+        {
+            clip.name = "Test";
+            clip.ShareClip();
+        }
+    }
+    #endregion
     public void saveCurrentClip()
     {
         if (clip != null)
@@ -266,6 +293,7 @@ public class PoseSkeleton : MonoBehaviour
             clip.SaveClip();
         }
     }
+
     public void TrimToEnd()
     {
         paused = true;

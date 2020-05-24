@@ -7,9 +7,20 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private IEnumerator sceneSwitcher;
-
     public static GameManager instance;
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
 
+    public string webHost = "http://127.0.0.1/sit383/";
+    public string webFunctions = "functions.php";
+    public string shareLinkAddress = "DATA";
+    public string VideoIDAddress = "VID";
+
+    [HideInInspector]
+    public string swingData { get; private set; }
+    [HideInInspector]
+    public bool isUsingSharedData = false;
+    #endregion
     private void Awake()
     {
         Init();
@@ -48,7 +59,24 @@ public class GameManager : MonoBehaviour
         yield return load;
         SceneManager.UnloadSceneAsync("MainMenu");
     }
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
 
-   
+    public void sharedSwing(string data)
+    {
+        swingData = data;
+        StartCoroutine(sceneSwitcher);
+        isUsingSharedData = true;
+    }
+    private void LateUpdate()
+    {
+        if (SceneManager.GetActiveScene().name == "MainScene" && isUsingSharedData)
+        {
+            GameObject obj = GameObject.Find("PlayerPoseVisualizer");
+            obj.GetComponent<PoseSkeleton>().loadSharedClip(PoseClip.Classification.Player);
+            isUsingSharedData = false;
+        }
+    }
+    #endregion
 
 }

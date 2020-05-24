@@ -23,7 +23,7 @@
 
 <script>
 		function myFunction() {
-		  location.replace("testapp://data?VID=<?php echo($_GET["VID"]) ?>")
+		  location.replace("golfswingandroid://data?VID=<?php echo($_GET["VID"]) ?>")
 		}
 	</script>	
 	<?php endif; ?>
