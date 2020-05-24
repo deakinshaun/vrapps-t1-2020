@@ -50,10 +50,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (RoleName.Equals("Nurse"))
         {
             //Make more descriptive avatar prefab names please
-            PhotonNetwork.Instantiate(avatarPrefab1.name, new Vector3(), Quaternion.identity, 0);
+            //PhotonNetwork.Instantiate(avatarPrefab1.name, new Vector3(), Quaternion.identity, 0);
 
             //set the bit enabling the mask which shows the movement ui layer to 1
-            SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Movement_UI");
+           
+            SceneCamera.cullingMask |= 1 << LayerMask.NameToLayer("Nurse_UI");
 
         }
         if (RoleName.Equals("Surgeon"))

@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Only ended up using this to switch scenes.
 public class GameManager : MonoBehaviour
 {
     private IEnumerator sceneSwitcher;
-
     public static GameManager instance;
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
 
+    public string webHost = "http://127.0.0.1/sit383/";
+    public string webFunctions = "functions.php";
+    public string shareLinkAddress = "DATA";
+    public string VideoIDAddress = "VID";
+
+    [HideInInspector]
+    public string swingData { get; private set; }
+    [HideInInspector]
+    public bool isUsingSharedData = false;
+    #endregion
     private void Awake()
     {
         Init();
@@ -25,6 +37,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,17 +59,24 @@ public class GameManager : MonoBehaviour
         yield return load;
         SceneManager.UnloadSceneAsync("MainMenu");
     }
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
 
-    /*
-     * possible game states/control flags
-     * basic            - load mocap data (own or target), back button
-     * mocapLoaded1      - edit,play,record,back button, load mocap
-     * mocapLoaded2      - edit,play,record,compare,back button, load mocap
-     * cameraReady      - back button, load mocap
-     * trackingReady    - record, back button, load mocap
-     * tracking         - none
-     * playing          - pause, playback speed, back button
-     * editing          - trimStart, trimEnd, done 
-     * 
-     * */
+    public void sharedSwing(string data)
+    {
+        swingData = data;
+        StartCoroutine(sceneSwitcher);
+        isUsingSharedData = true;
+    }
+    private void LateUpdate()
+    {
+        if (SceneManager.GetActiveScene().name == "MainScene" && isUsingSharedData)
+        {
+            GameObject obj = GameObject.Find("PlayerPoseVisualizer");
+            obj.GetComponent<PoseSkeleton>().loadSharedClip(PoseClip.Classification.Player);
+            isUsingSharedData = false;
+        }
+    }
+    #endregion
+
 }

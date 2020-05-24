@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.geoffnewman.testingapp",
+    "sha256_cert_fingerprints": ["CD:79:5B:15:4E:C7:CC:9F:F5:5E:E9:F5:85:8F:5C:B8:F4:D7:62:9A:FE:45:87:7E:85:77:3D:CF:5D:E8:5B:2A"]
+  }
+}]

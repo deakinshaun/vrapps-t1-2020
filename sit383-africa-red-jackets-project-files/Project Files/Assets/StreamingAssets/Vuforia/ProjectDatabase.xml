@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="CR-Gallery-FI-Journey-Begins" size="0.500000 0.280928" />
+    <ImageTarget name="map_hallownest" size="0.500000 0.281250" />
+    <ImageTarget name="peonies" size="0.500000 0.375000" />
+    <ImageTarget name="cracked_soil" size="0.500000 0.333462" />
+  </Tracking>
+</QCARConfig>

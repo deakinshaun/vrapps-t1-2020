@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Habitat
   - Animal
+  - Info
+  - Tiger
+  - Monkey
+  - Elephant
+  - Sheep
+  - Whale
   layers:
   - Default
   - TransparentFX
