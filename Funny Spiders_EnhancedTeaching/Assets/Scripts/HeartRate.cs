@@ -120,7 +120,7 @@ public class HeartRate : MonoBehaviour
             // Smooth peak frequency so not too jumpy.
             smoothedPeak = smoothingFactor * smoothedPeak + (1.0f - smoothingFactor) * peakFreq;
             
-            message.text = "Base freq: " + baseFreq + "Hz" + "\n" + "Bin freq: " + binFreq + "Hz" + "\n " + "Peak freq: " + smoothedPeak + "Hz" + " = " + (smoothedPeak * 60) + "bpm";
+            message.text = "Current heartbeat: " + (smoothedPeak * 60) + "bpm";
         }
         else
         {

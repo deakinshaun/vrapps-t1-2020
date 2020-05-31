@@ -9,14 +9,9 @@ public class ModelSwap : MonoBehaviour, IVirtualButtonEventHandler
     public GameObject[] objects;
     int i = 0;
 
-    public void HideObjects()
+    public void SetObjects()
     {
         objects[0].SetActive(true);
-        objects[1].SetActive(false);
-        objects[2].SetActive(false);
-        objects[3].SetActive(false);
-        objects[4].SetActive(false);
-        objects[5].SetActive(false);
     }
     
     public void OnButtonPressed(VirtualButtonBehaviour vb)
@@ -34,7 +29,7 @@ public class ModelSwap : MonoBehaviour, IVirtualButtonEventHandler
     }
     void Start()
     {
-        HideObjects();
+        SetObjects();
 
         Obj.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
     }

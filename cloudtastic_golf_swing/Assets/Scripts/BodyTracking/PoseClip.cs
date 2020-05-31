@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 //A container for posedata related to a single motion data capture. (clip)
 public class PoseClip
@@ -19,6 +20,7 @@ public class PoseClip
     }
     private IEnumerator fileSaver;
     private IEnumerator fileLoader;
+    private IEnumerator fileShare;
 
     public PoseClip(Classification clipType)
     {
@@ -80,8 +82,7 @@ public class PoseClip
         }
         yield return null;       
     }
-
-    public PoseClip LoadClip(PoseClip poseClip,Classification clipType)
+    public PoseClip LoadClip(PoseClip poseClip, Classification clipType)
     {
         poseClip.clipType = clipType;
         string path = Application.persistentDataPath;
@@ -109,4 +110,56 @@ public class PoseClip
             return null;
         }
     }
+    #region ByGeoff
+    //By Geoff Newman SID 215291967
+    public PoseClip LoadSharedClip(PoseClip poseClip, Classification clipType)
+    {
+        poseClip.clipType = clipType;
+
+        try
+        {
+            // Open the file to read from.
+            string readText = GameManager.instance.swingData;
+            poseClip = JsonUtility.FromJson<PoseClip>(readText);
+            poseClip.clipType = clipType;
+            poseClip.syncFactor = 1;
+            return poseClip;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("unable to load shared data: ");
+            return null;
+        }
+    }
+    public void ShareClip()
+    {
+        fileShare = JsonShare(clipType);
+        GameManager.instance.StartCoroutine(fileShare);
+    }
+    IEnumerator JsonShare(Classification clipType)
+    {
+        PoseClipToSave clip;
+        clip.durationMilliseconds = this.durationMilliseconds;
+        clip.name = this.name;
+        clip.frames = this.frames.ToArray();
+        string data = JsonUtility.ToJson(clip);
+
+
+        string address = GameManager.instance.webHost + GameManager.instance.webFunctions;
+        using (UnityWebRequest www = UnityWebRequest.Get(address+ "?DATA=" + data))
+        {
+            yield return www.SendWebRequest();
+            Debug.Log(www.url);
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string url = (GameManager.instance.webHost + "?VID=" + www.downloadHandler.text);
+                Application.OpenURL(string.Format("sms:?body=" + url));
+            }
+        }
+    }
+    #endregion
 }
