@@ -46,7 +46,11 @@ public class FetchPose : MonoBehaviour
         {
             isRecording = !isRecording;
             if (isRecording&& CameraManager.instance.initCamera())
-            {  
+            {
+               // if (currentPoseSkeleton.clip.frames.Count == 0)
+               // {
+                    watch.Reset();
+               // }
                 watch.Start();
                 skeleton.clip = new PoseClip(clipType);
             }
@@ -83,7 +87,7 @@ public class FetchPose : MonoBehaviour
     private void Ready(bool ready)
     {
         dataReady = ready;
-        UIManager.instance.outputText.text  += "\n Dataready:"+dataReady;
+        UIManager.instance.outputText.text  = "Dataready:"+dataReady;
     }
     IEnumerator prepareModel()
     {
@@ -140,10 +144,10 @@ public class FetchPose : MonoBehaviour
             if(pose.Length > 0)
             {
                 currentPoseSkeleton.updatePose(pose);
-                if(currentPoseSkeleton.clip.frames.Count ==0)
-                {
-                    watch.Reset();
-                }
+               // if(currentPoseSkeleton.clip.frames.Count ==0)
+               // {
+                //    watch.Reset();
+                //}
                 //record frame
                 watch.Stop();
                 currentPoseSkeleton.clip.addFrame(new PoseData(pose,watch.ElapsedMilliseconds));

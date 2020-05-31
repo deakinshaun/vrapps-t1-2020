@@ -78,9 +78,9 @@ public class SynchClips : MonoBehaviour
         scoreVisible = true;
         float scored = score / duration;
         scoreText.text = "Score:\n" + scored;
-        if(scored > 200)
+        if(scored > 100)
         {
-            scored = 200;
+            scored = 100;
         }
         if(scored < 1)
         {

@@ -269,7 +269,7 @@ public class PoseSkeleton : MonoBehaviour
     public void TrimToEnd()
     {
         paused = true;
-        clip.frames.RemoveRange(frame, clip.frames.Count - frame);
+        clip.frames.RemoveRange(frame+1, clip.frames.Count - frame-1);
         clipCounter = clip.frames.Count - 1;
         frame = clipCounter;
         frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
@@ -277,7 +277,19 @@ public class PoseSkeleton : MonoBehaviour
     }
     public void TrimFromStart()
     {
-        clip.frames.RemoveRange(0, frame);
+        try
+        {
+            paused = true;
+            clip.frames.RemoveRange(0, frame);
+            frame = 0;
+            clipCounter = 0;
+            frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
+        }
+        catch(ArgumentOutOfRangeException aoore)
+        {
+            Debug.Log("trim from start caught ArgumentOutOfRangeException range 0 to " + frame);
+        }
+        
     }
     IEnumerator PlayCoroutine()
     {
@@ -287,28 +299,53 @@ public class PoseSkeleton : MonoBehaviour
             {
                 if (!paused)
                 {
-                    drawPosePoints(clip.frames[clipCounter].poseFrame);
-                    drawSkeleton(clip.frames[clipCounter].poseFrame);
-                    info.text = ": " + frame;
-                    frame = clipCounter;
-                    clipCounter++;
-
-                    frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
-
-                    if (clipCounter >= clip.frames.Count)
+                    try
                     {
-                        clipCounter = 0;
+                        drawPosePoints(clip.frames[clipCounter].poseFrame);
+                        drawSkeleton(clip.frames[clipCounter].poseFrame);
+                        info.text = ": " + frame;
+                        frame = clipCounter;
+                        clipCounter++;
+
+                        frameSlider.SetValueWithoutNotify((float)clipCounter / clip.frames.Count * 100f);
+
+                        if (clipCounter >= clip.frames.Count)
+                        {
+                            clipCounter = 0;
+                        }
                     }
+                    catch(ArgumentOutOfRangeException ioore)
+                    {
+                        Debug.Log("caught ArgumentOutOfRangeException1"+ioore.Message );
+                    }
+                   
                 }
                 else
                 {
-                    clipCounter = frame;
-                    info.text = ": " + frame;
-                    drawPosePoints(clip.frames[clipCounter].poseFrame);
-                    drawSkeleton(clip.frames[clipCounter].poseFrame);
+                     try
+                     {
+                         clipCounter = frame;
+                         info.text = ": " + frame;
+                         drawPosePoints(clip.frames[clipCounter].poseFrame);
+                         drawSkeleton(clip.frames[clipCounter].poseFrame);
+                     }
+                     catch(ArgumentOutOfRangeException ioore)
+                     {
+                         Debug.Log("caught ArgumentOutOfRangeException2" + ioore.Message);
+                     }                   
+                   
                 }
-
-                yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime * clip.syncFactor * playBackSpeed);
+                if(clipCounter < clip.frames.Count)
+                {
+                    yield return new WaitForSeconds(clip.frames[clipCounter].deltaTime);
+                }
+                else
+                {
+                    Debug.Log("Clipcounter out of range: " + clipCounter + " clip.frames:" + clip.frames.Count);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            
+                
                 //yield return new WaitForSecondsRealtime(clip.frames[clipCounter].deltaTime * playBackSpeed);
             }
         }

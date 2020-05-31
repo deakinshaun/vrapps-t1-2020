@@ -44,12 +44,16 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            UIManager.instance.outputText.text = "No back camera detected";
+            UIManager.instance.outputText.text = "No back camera detected using: " + devices[0].name;
             if (webcamTexture != null) webcamTexture.Stop();
             webcamTexture = new WebCamTexture(devices[0].name);
             UIManager.instance.rawImage.GetComponent<RawImage>().texture = webcamTexture;
             backCam = false;//just using any camera for testing
-            webcamTexture.Play();
+            if(!webcamTexture.isPlaying && devices[0].name.Equals("Integrated Webcam"))
+            {
+                webcamTexture.Play();
+            }
+           
         }
        
         for (int i = 0; i < devices.Length; i++)
@@ -61,7 +65,10 @@ public class CameraManager : MonoBehaviour
                 webcamTexture = new WebCamTexture(devices[i].name);
                 UIManager.instance.rawImage.GetComponent<RawImage>().texture = webcamTexture;
                 backCam = true;
-                webcamTexture.Play();
+                if(!webcamTexture.isPlaying)
+                {
+                    webcamTexture.Play();
+                }
             }
         }
         return backCam;
