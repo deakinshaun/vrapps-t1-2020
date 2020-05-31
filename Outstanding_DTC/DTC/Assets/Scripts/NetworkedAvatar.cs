@@ -10,8 +10,7 @@ using OVRTouchSample;
 
 public class NetworkedAvatar : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // the OVR player controller
-    private GameObject playerController;
+    private GameObject ovrCameraRig;
     
     // the transforms on this networked avatar that get synched to the player controller
     public Transform head;
@@ -35,8 +34,8 @@ public class NetworkedAvatar : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine || !PhotonNetwork.IsConnected)
         {
             // assign necessary links to the source data
-            playerController = GameObject.Find("OVRPlayerController");
-            OVRCameraRig cameraRig = playerController.GetComponentInChildren<OVRCameraRig>();
+            ovrCameraRig = GameObject.Find("OVRCameraRig");
+            OVRCameraRig cameraRig = ovrCameraRig.GetComponent<OVRCameraRig>();
             headSource = cameraRig.centerEyeAnchor;
             handLeftSource = cameraRig.leftHandAnchor;
             handRightSource = cameraRig.rightHandAnchor;
@@ -66,15 +65,15 @@ public class NetworkedAvatar : MonoBehaviourPunCallbacks, IPunObservable
     {
         // update positions of body, head, left and right hands if this is mine
         // this is global as it's the main player position in the world
-        transform.position = playerController.transform.position;
-        transform.rotation = playerController.transform.rotation;
+        transform.position = ovrCameraRig.transform.position;
+        transform.rotation = ovrCameraRig.transform.rotation;
 
         // these are local as they are determined relative to the main player's global position
         head.localPosition = headSource.localPosition;
         head.localRotation = headSource.localRotation;
-        handLeft.position = handLeftSource.position;
-        handLeft.rotation = handLeftSource.rotation;
-        handRight.position = handRightSource.position;
-        handRight.rotation = handRightSource.rotation;
+        handLeft.localPosition = handLeftSource.localPosition;
+        handLeft.localRotation = handLeftSource.localRotation;
+        handRight.localPosition = handRightSource.localPosition;
+        handRight.localRotation = handRightSource.localRotation;
     }
 }
